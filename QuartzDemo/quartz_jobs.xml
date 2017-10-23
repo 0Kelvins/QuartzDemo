@@ -1,0 +1,70 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- This file contains job definitions in schema version 2.0 format -->
+
+<job-scheduling-data xmlns="http://quartznet.sourceforge.net/JobSchedulingData"
+                     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" version="2.0">
+
+  <processing-directives>
+    <overwrite-existing-data>true</overwrite-existing-data>
+  </processing-directives>
+
+  <schedule>
+
+    <!--TestJob测试 任务配置-->
+    <job>
+      <!--任务名称，同一个group中多个job的name不能相同-->
+      <name>TestJob</name>
+      <group>Test</group>
+      <description>TestJob测试</description>
+      <!--任务类型，任务的具体类型及所属程序集-->
+      <job-type>QuartzDemo.TestJob,QuartzDemo</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <cron>
+        <name>TestJobTrigger</name>
+        <group>Test</group>
+        <job-name>TestJob</job-name>
+        <job-group>Test</job-group>
+        <start-time>2015-01-22T00:00:00+08:00</start-time>
+        <!--秒 分 时 日 月 周 年（可略）-->
+        <cron-expression>0/3 * * * * ?</cron-expression>
+      </cron>
+    </trigger>
+
+    <!--TestJob2测试 任务配置-->
+    <job>
+      <name>TestJob2</name>
+      <group>Test</group>
+      <description>TestJob2测试</description>
+      <job-type>QuartzDemo.TestJob2,QuartzDemo</job-type>
+      <durable>true</durable>
+      <recover>false</recover>
+    </job>
+    <trigger>
+      <!--简单任务的触发器，可以调度用于重复执行的任务-->
+      <simple>
+        <!--触发器名称，同一个分组中的名称必须不同-->
+        <name>TestJob2Trigger</name>
+        <!--触发器组-->
+        <group>Test</group>
+        <!--描述-->
+        <description>Simple trigger to simply fire sample job</description>
+        <!--要调度的任务名称，该job-name必须和对应job节点中的name完全相同-->
+        <job-name>TestJob2</job-name>
+        <!--调度任务(job)所属分组，该值必须和job中的group完全相同-->
+        <job-group>Test</job-group>
+        <!--任务开始时间-->
+        <start-time>2015-01-22T00:00:00+08:00</start-time>
+        <!--失败指令：智能政策-->
+        <misfire-instruction>SmartPolicy</misfire-instruction>
+        <!--任务执行次数  -1 为无限次执行-->
+        <repeat-count>-1</repeat-count>
+        <!--任务触发间隔(毫秒)-->
+        <repeat-interval>1000</repeat-interval>
+      </simple>
+    </trigger>
+  </schedule>
+</job-scheduling-data>
